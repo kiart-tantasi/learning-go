@@ -1,0 +1,5 @@
+# compiled file on windows
+*.exe
+
+# env files
+.env
