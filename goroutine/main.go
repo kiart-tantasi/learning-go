@@ -20,7 +20,8 @@ func doesWait() {
 		channal <- 123
 	}()
 	<-channal
-	fmt.Println("app ended\n")
+	fmt.Println("app ended")
+	fmt.Println("")
 }
 
 func doesNotWait() {
@@ -29,7 +30,8 @@ func doesNotWait() {
 		time.Sleep(5 * time.Second)
 		fmt.Println("Sleep is done")
 	}()
-	fmt.Println("app ended\n")
+	fmt.Println("app ended")
+	fmt.Println("")
 }
 
 func getValueFromGoroutine() {
@@ -42,5 +44,6 @@ func getValueFromGoroutine() {
 	// get value from channal variable
 	strFromChan := <-strChan
 	fmt.Println(strFromChan)
-	fmt.Println("app ended\n")
+	fmt.Println("app ended")
+	fmt.Println("")
 }

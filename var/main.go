@@ -1,14 +1,16 @@
 package main
 
-import "fmt"
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func main() {
 	var num1 int = 100
 	num2 := 100
 	plus := num1 + num2
 	fmt.Println(plus)
-	
+
 	num4, num5, num6 := 100, 100, 100
 	plus = plus + num4 + num5 + num6
 	fmt.Println(plus)
@@ -34,7 +36,7 @@ func main() {
 
 	var (
 		m string = "string"
-		n int = 123
+		n int    = 123
 		o bool
 	)
 	o = true
@@ -48,7 +50,7 @@ func main() {
 	var not1 string
 	var not2 int
 	var not3 bool
-	fmt.Printf("value of not1, not2, not3: %s %d %b\n", not1, not2, not3)
+	fmt.Printf("value of not1, not2, not3: %s %d %t\n", not1, not2, not3)
 	// print types
 	fmt.Printf("types of not1, not2, not3 are %T %T %T\n", not1, not2, not3)
 
