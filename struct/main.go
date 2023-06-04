@@ -3,12 +3,12 @@ package main
 import "fmt"
 
 type Person struct {
-	FirstName string
-	LastName  string
+	firstName string
+	lastName  string
 }
 
 func (p Person) PrintName() {
-	fmt.Println("Hello ! my name is", p.FirstName, p.LastName)
+	fmt.Println("Hello ! my name is", p.firstName, p.lastName)
 }
 
 type SomeFields struct {
@@ -26,11 +26,11 @@ func (s *SomeFields) UpdateB(newB string) {
 func main() {
 	// normal struct
 	person := Person{
-		FirstName: "Hello",
-		LastName:  "World",
+		firstName: "Hello",
+		lastName:  "World",
 	}
-	fmt.Println(person.FirstName)
-	fmt.Println(person.LastName)
+	fmt.Println(person.firstName)
+	fmt.Println(person.lastName)
 	fmt.Println("")
 
 	// use struct's method
@@ -49,7 +49,7 @@ func main() {
 	// pointer
 	personPointer := &person
 	fmt.Println("from pointer")
-	fmt.Println(personPointer.FirstName)
+	fmt.Println(personPointer.firstName)
 	fmt.Println("")
 
 	// update same value without / with pointer

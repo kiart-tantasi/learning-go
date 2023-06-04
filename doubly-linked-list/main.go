@@ -6,9 +6,9 @@ import (
 )
 
 type Node struct {
-	Value int
-	Next  *Node
-	Prev  *Node
+	value int
+	next  *Node
+	prev  *Node
 }
 
 type DoublyLinkedList struct {
@@ -20,8 +20,8 @@ func (l *DoublyLinkedList) Add(node *Node) {
 	if l.Head == nil {
 		l.Head = node
 	} else {
-		node.Prev = l.Tail
-		l.Tail.Next = node
+		node.prev = l.Tail
+		l.Tail.next = node
 	}
 	l.Tail = node
 }
@@ -29,16 +29,16 @@ func (l *DoublyLinkedList) Add(node *Node) {
 func (l *DoublyLinkedList) PrintAllNodesValue() {
 	node := l.Head
 	for node != nil {
-		fmt.Println("current node's value:", node.Value)
-		node = node.Next
+		fmt.Println("current node's value:", node.value)
+		node = node.next
 	}
 }
 
 func (l *DoublyLinkedList) PrintAllNodesValueBackWard() {
 	node := l.Tail
 	for node != nil {
-		fmt.Println("current node's value:", node.Value)
-		node = node.Prev
+		fmt.Println("current node's value:", node.value)
+		node = node.prev
 	}
 }
 
@@ -47,11 +47,11 @@ func (l *DoublyLinkedList) FindIndex(value int) (int, error) {
 	node := l.Head
 
 	for node != nil {
-		if node.Value == value {
+		if node.value == value {
 			return index, nil
 		}
 		index++
-		node = node.Next
+		node = node.next
 	}
 
 	return 1, errors.New("node not found")
@@ -61,7 +61,7 @@ func (l *DoublyLinkedList) getLength() int {
 	length := 0
 	node := l.Head
 	for node != nil {
-		node = node.Next
+		node = node.next
 		length++
 	}
 
@@ -72,7 +72,7 @@ func main() {
 	list := &DoublyLinkedList{}
 	for i := 1; i <= 3; i++ {
 		list.Add(&Node{
-			Value: i,
+			value: i,
 		})
 	}
 	list.PrintAllNodesValue()

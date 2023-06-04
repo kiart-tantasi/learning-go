@@ -6,25 +6,25 @@ import (
 )
 
 type Stack struct {
-	Items []int
+	items []int
 }
 
 func (s *Stack) Push(newItem int) {
-	s.Items = append(s.Items, newItem)
+	s.items = append(s.items, newItem)
 }
 
 func (s *Stack) Pop() (int, error) {
-	if (len(s.Items)) == 0 {
+	if (len(s.items)) == 0 {
 		return 0, errors.New("there are no items left in sack")
 	}
-	poped := s.Items[len(s.Items)-1]
-	s.Items = s.Items[0 : len(s.Items)-1]
+	poped := s.items[len(s.items)-1]
+	s.items = s.items[0 : len(s.items)-1]
 	return poped, nil
 }
 
 func main() {
 	stack := Stack{
-		Items: []int{},
+		items: []int{},
 	}
 
 	// push

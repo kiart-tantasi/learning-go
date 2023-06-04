@@ -6,25 +6,25 @@ import (
 )
 
 type Queue struct {
-	Queues []int
+	queues []int
 }
 
 func (q *Queue) Enqueue(newItem int) {
-	q.Queues = append(q.Queues, newItem)
+	q.queues = append(q.queues, newItem)
 }
 
 func (q *Queue) Dequeue() (int, error) {
-	if len(q.Queues) == 0 {
+	if len(q.queues) == 0 {
 		return 0, errors.New("no queues left")
 	}
-	out := q.Queues[0]
-	q.Queues = q.Queues[1:]
+	out := q.queues[0]
+	q.queues = q.queues[1:]
 	return out, nil
 }
 
 func main() {
 	queue := Queue{
-		Queues: []int{},
+		queues: []int{},
 	}
 
 	// enqueue
