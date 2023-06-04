@@ -3,18 +3,19 @@ package main
 import "fmt"
 
 type Person struct {
-	firstName string
-	lastName string
+	FirstName string
+	LastName  string
 }
 
 func (p Person) PrintName() {
-	fmt.Println("Hello ! my name is", p.firstName, p.lastName)
+	fmt.Println("Hello ! my name is", p.FirstName, p.LastName)
 }
 
 type SomeFields struct {
 	a, b string
-	c int
+	c    int
 }
+
 func (s SomeFields) UpdateBWithoutPointer(newB string) {
 	s.b = newB
 }
@@ -24,12 +25,12 @@ func (s *SomeFields) UpdateB(newB string) {
 
 func main() {
 	// normal struct
-	person := Person {
-		firstName: "Hello",
-		lastName: "World",
+	person := Person{
+		FirstName: "Hello",
+		LastName:  "World",
 	}
-	fmt.Println(person.firstName)
-	fmt.Println(person.lastName)
+	fmt.Println(person.FirstName)
+	fmt.Println(person.LastName)
 	fmt.Println("")
 
 	// use struct's method
@@ -37,7 +38,7 @@ func main() {
 	fmt.Println("")
 
 	// struct does not require values for all fields
-	someFields := SomeFields {
+	someFields := SomeFields{
 		a: "a field",
 	}
 	fmt.Println("field that has value:", someFields.a)
@@ -48,7 +49,7 @@ func main() {
 	// pointer
 	personPointer := &person
 	fmt.Println("from pointer")
-	fmt.Println(personPointer.firstName)
+	fmt.Println(personPointer.FirstName)
 	fmt.Println("")
 
 	// update same value without / with pointer
