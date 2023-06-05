@@ -23,6 +23,26 @@ func (b *Bst) Search(value int) int {
 	return b.headNode.Search(value)
 }
 
+func (bst *Bst) DepthFirstTraverse() {
+	if bst.headNode == nil {
+		return
+	}
+	bst.headNode.DeptFirstTraverse()
+}
+
+func (bst *Bst) BreadthFirstTraverse() {
+	if bst.headNode == nil {
+		return
+	}
+	nodes := []*Node{
+		bst.headNode,
+	}
+	for len(nodes) != 0 {
+		node := nodes[0]
+		node.BreadthFirstTraverse(&nodes)
+	}
+}
+
 type Node struct {
 	value int
 	left  *Node
@@ -31,7 +51,6 @@ type Node struct {
 
 func (node *Node) Insert(newValue int) {
 	if newValue <= node.value {
-		// left
 		if node.left == nil {
 			node.left = &Node{
 				value: newValue,
@@ -40,7 +59,6 @@ func (node *Node) Insert(newValue int) {
 			node.left.Insert(newValue)
 		}
 	} else {
-		// right
 		if node.right == nil {
 			node.right = &Node{
 				value: newValue,
@@ -74,7 +92,16 @@ func (node *Node) Search(value int) int {
 	}
 }
 
-// TODO: make fimction to do breadth-first traverse
+func (node *Node) BreadthFirstTraverse(items *[]*Node) {
+	if node.left != nil {
+		*items = append(*items, node.left)
+	}
+	if node.right != nil {
+		*items = append(*items, node.right)
+	}
+	fmt.Println(node.value)
+	*items = (*items)[1:]
+}
 
 func main() {
 	bst := &Bst{}
@@ -83,17 +110,22 @@ func main() {
 	bst.Insert(4)
 	bst.Insert(1)
 	bst.Insert(5)
-	bst.headNode.DeptFirstTraverse()
+
+	// depth-first traverse
+	fmt.Println("depth-first traverse:")
+	bst.DepthFirstTraverse()
+
+	// breadth-first traverse
+	fmt.Println("")
+	fmt.Println("breadth-first traverse:")
+	bst.BreadthFirstTraverse()
 
 	// search
-	fmt.Println("\nsearching")
+	fmt.Println("")
+	fmt.Println("searching")
 	fmt.Println(bst.Search(3))
 	fmt.Println(bst.Search(2))
 	fmt.Println(bst.Search(4))
 	// search for node that does not exist
 	fmt.Println(bst.Search(123))
 }
-
-//       3
-//     2   4
-//    1     5
