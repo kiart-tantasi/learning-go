@@ -69,15 +69,6 @@ func (node *Node) Insert(newValue int) {
 	}
 }
 
-func (node *Node) DeptFirstTraverse() {
-	if node == nil {
-		return
-	}
-	fmt.Println(node.value)
-	node.left.DeptFirstTraverse()
-	node.right.DeptFirstTraverse()
-}
-
 func (node *Node) Search(value int) int {
 	if node == nil {
 		return -1
@@ -92,6 +83,15 @@ func (node *Node) Search(value int) int {
 	}
 }
 
+func (node *Node) DeptFirstTraverse() {
+	if node == nil {
+		return
+	}
+	fmt.Println(node.value)
+	node.left.DeptFirstTraverse()
+	node.right.DeptFirstTraverse()
+}
+
 func (node *Node) BreadthFirstTraverse(items *[]*Node) {
 	if node.left != nil {
 		*items = append(*items, node.left)
@@ -104,12 +104,21 @@ func (node *Node) BreadthFirstTraverse(items *[]*Node) {
 }
 
 func main() {
+	//   [tree]
+	//         5
+	//     3       7
+	//   2   4   6   8
+	// 1               9
 	bst := &Bst{}
+	bst.Insert(5)
 	bst.Insert(3)
+	bst.Insert(7)
 	bst.Insert(2)
 	bst.Insert(4)
+	bst.Insert(6)
+	bst.Insert(8)
 	bst.Insert(1)
-	bst.Insert(5)
+	bst.Insert(9)
 
 	// depth-first traverse
 	fmt.Println("depth-first traverse:")
