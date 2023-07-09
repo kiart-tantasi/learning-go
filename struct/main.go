@@ -4,7 +4,7 @@ import "fmt"
 
 type Person struct {
 	firstName string
-	lastName string
+	lastName  string
 }
 
 func (p Person) PrintName() {
@@ -13,8 +13,9 @@ func (p Person) PrintName() {
 
 type SomeFields struct {
 	a, b string
-	c int
+	c    int
 }
+
 func (s SomeFields) UpdateBWithoutPointer(newB string) {
 	s.b = newB
 }
@@ -24,9 +25,9 @@ func (s *SomeFields) UpdateB(newB string) {
 
 func main() {
 	// normal struct
-	person := Person {
+	person := Person{
 		firstName: "Hello",
-		lastName: "World",
+		lastName:  "World",
 	}
 	fmt.Println(person.firstName)
 	fmt.Println(person.lastName)
@@ -37,7 +38,7 @@ func main() {
 	fmt.Println("")
 
 	// struct does not require values for all fields
-	someFields := SomeFields {
+	someFields := SomeFields{
 		a: "a field",
 	}
 	fmt.Println("field that has value:", someFields.a)

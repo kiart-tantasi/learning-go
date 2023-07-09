@@ -8,7 +8,6 @@ import (
 func main() {
 	doesWait()
 	doesNotWait()
-	getValueFromGoroutine()
 }
 
 func doesWait() {
@@ -19,31 +18,21 @@ func doesWait() {
 		fmt.Println("Sleep is done")
 		channal <- 123
 	}()
-	<-channal
+	valueFromChannel := <-channal
+	fmt.Println("value is", valueFromChannel)
 	fmt.Println("app ended")
 	fmt.Println("")
 }
 
 func doesNotWait() {
 	fmt.Println("started app (doesNotWait)")
+	channal := make(chan int)
 	go func() {
 		time.Sleep(5 * time.Second)
 		fmt.Println("Sleep is done")
+		channal <- 123
 	}()
-	fmt.Println("app ended")
-	fmt.Println("")
-}
-
-func getValueFromGoroutine() {
-	fmt.Println("started app (getValueFromGoroutine)")
-	strChan := make(chan string)
-	go func() {
-		time.Sleep(5 * time.Second)
-		strChan <- "Hello World"
-	}()
-	// get value from channal variable
-	strFromChan := <-strChan
-	fmt.Println(strFromChan)
+	// value in channel is not pulled out and used
 	fmt.Println("app ended")
 	fmt.Println("")
 }
