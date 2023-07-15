@@ -6,8 +6,23 @@ import (
 )
 
 func main() {
-	doesWait()
-	doesNotWait()
+	// doesWait()
+	// doesNotWait()
+
+	size := 3
+	limited := make(chan int, size)
+	limited <- 1
+	limited <- 2
+	limited <- 3
+	// limited <- 4 // causes deadlock error (exceeding size)
+
+	toAdd := 4
+	for {
+		fmt.Println(<-limited)
+		limited <- toAdd
+		toAdd++
+		time.Sleep(time.Second)
+	}
 }
 
 func doesWait() {
