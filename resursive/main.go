@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	m1 := []int{1, 2, 3}
-	for index, _ := range m1 {
+	for index := range m1 {
 		looked := make(map[int]bool)
 		looked[index] = true
 		iter(index, m1, make(map[int]bool))
@@ -16,14 +16,11 @@ func iter(index int, m []int, looked map[int]bool) {
 	if ok {
 		return
 	}
-	if len(looked) == len(m) {
-		return
-	}
 
-	fmt.Println("current index:", index)
+	fmt.Println(index)
 	newLooked := copyMap(looked)
 	newLooked[index] = true
-	for i, _ := range m {
+	for i := range m {
 		iter(i, m, newLooked)
 	}
 }
