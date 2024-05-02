@@ -32,28 +32,26 @@ func deadlockDemo() {
 }
 
 func doesWait() {
-	fmt.Println("started app (doesWait)")
+	fmt.Println("[doesWait]")
 	channal := make(chan int)
 	go func() {
 		time.Sleep(5 * time.Second)
-		fmt.Println("Sleep is done")
+		fmt.Println("sleep is done")
 		channal <- 123
 	}()
-	valueFromChannel := <-channal
-	fmt.Println("value is", valueFromChannel)
-	fmt.Println("app ended")
-	fmt.Println("")
+	// pull value from channel to block the next line
+	<-channal
+	fmt.Println("app ended\n")
 }
 
 func doesNotWait() {
-	fmt.Println("started app (doesNotWait)")
+	fmt.Println("[doesNotWait]")
 	channal := make(chan int)
 	go func() {
 		time.Sleep(5 * time.Second)
-		fmt.Println("Sleep is done")
+		fmt.Println("sleep is done")
 		channal <- 123
 	}()
-	// value in channel is not pulled out and used
-	fmt.Println("app ended")
-	fmt.Println("")
+	// value in channel is not pulled out so it does not block the next line
+	fmt.Println("app ended\n")
 }
