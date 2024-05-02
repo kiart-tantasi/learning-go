@@ -8,7 +8,10 @@ import (
 func main() {
 	// doesWait()
 	// doesNotWait()
+	// deadlockDemo()
+}
 
+func deadlockDemo() {
 	size := 3
 	limited := make(chan int, size)
 	limited <- 1
@@ -18,8 +21,11 @@ func main() {
 
 	toAdd := 4
 	for {
+		// pull value from channel
 		fmt.Println(<-limited)
-		limited <- toAdd
+
+		// keep adding value into channel to prevent deadlock error (no value to be pulled)
+		limited <- toAdd // comment this to get deadlock error
 		toAdd++
 		time.Sleep(time.Second)
 	}
