@@ -11,26 +11,6 @@ func main() {
 	// deadlockDemo()
 }
 
-func deadlockDemo() {
-	size := 3
-	limited := make(chan int, size)
-	limited <- 1
-	limited <- 2
-	limited <- 3
-	// limited <- 4 // causes deadlock error (exceeding size)
-
-	toAdd := 4
-	for {
-		// pull value from channel
-		fmt.Println(<-limited)
-
-		// keep adding value into channel to prevent deadlock error (no value to be pulled)
-		limited <- toAdd // comment this to get deadlock error
-		toAdd++
-		time.Sleep(time.Second)
-	}
-}
-
 func doesWait() {
 	fmt.Println("[doesWait]")
 	channal := make(chan int)
@@ -54,4 +34,24 @@ func doesNotWait() {
 	}()
 	// value in channel is not pulled out so it does not block the next line
 	fmt.Println("app ended\n")
+}
+
+func deadlockDemo() {
+	ch := make(chan int, 3)
+	ch <- 1
+	ch <- 2
+	ch <- 3
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		// free space
+		<-ch // un-comment this line to resolve deadlock (channel blocking but no code will free space)
+	}()
+
+	ch <- 4
+
+	fmt.Println("poped from channel -", (<-ch))
+	fmt.Println("poped from channel -", (<-ch))
+	fmt.Println("poped from channel -", (<-ch))
+	fmt.Print("done")
 }
