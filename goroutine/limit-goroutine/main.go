@@ -24,15 +24,14 @@ func limitDemo() {
 		// reserve space in limit channel
 		// because we have code to free space in function below so we can reserve space in limiter channel with more then limit
 		limiter <- 0
-		fmt.Println("done, reserved limit for number", num)
-		currentNum := num
-		go func() {
+		fmt.Println("reserved limit for number", num)
+		go func(currentNum int) {
 			time.Sleep(2 * time.Second)
 			results <- currentNum
 			// free space
 			<-limiter
 			fmt.Println("freed space for number", currentNum)
-		}()
+		}(num)
 	}
 	// hack to wait for all goroutines to finish
 	time.Sleep(10 * time.Second)
