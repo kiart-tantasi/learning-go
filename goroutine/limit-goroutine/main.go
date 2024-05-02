@@ -26,15 +26,16 @@ func limitDemo() {
 		limiter <- 0
 		fmt.Println("reserved limit for number", num)
 		go func(currentNum int) {
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 			results <- currentNum
 			// free space
 			<-limiter
 			fmt.Println("freed space for number", currentNum)
 		}(num)
 	}
-	// hack to wait for all goroutines to finish
-	time.Sleep(10 * time.Second)
+
+	getResultsCorrectDemo(resultAmount, results)
+	// getResultsWrongDemo(results)
 }
 
 func limitDeadlockDemo() {
@@ -47,7 +48,7 @@ func limitDeadlockDemo() {
 		limiter <- 0
 		currentNum := num
 		go func() {
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 			str := strconv.Itoa(currentNum)
 			results <- str
 			// we never promise to free space in limiter channel
@@ -55,4 +56,20 @@ func limitDeadlockDemo() {
 			// <-limiter // un-comment to promise to free space to prevent deadlock error
 		}()
 	}
+}
+
+func getResultsCorrectDemo(resultAmount int, results chan int) {
+	resultsStr := ""
+	for i := 1; i <= resultAmount; i++ {
+		resultsStr += strconv.Itoa(<-results) + " "
+	}
+	fmt.Println("results:", resultsStr)
+}
+
+func getResultsWrongDemo(results chan int) {
+	resultsStr := ""
+	for i := 0; i < len(results); i++ {
+		resultsStr += strconv.Itoa(<-results) + "-"
+	}
+	fmt.Println("results:", resultsStr)
 }
