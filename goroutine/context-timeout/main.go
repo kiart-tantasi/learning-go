@@ -9,6 +9,8 @@ import (
 func main() {
 	// demoWithTimeout()
 	demoWithCancel()
+
+	// context.WithDeadline works pretty close to .WithTimeout except we can instead define expiration time
 }
 
 func demoWithTimeout() {
