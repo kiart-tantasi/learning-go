@@ -17,7 +17,7 @@ func main() {
 	consumer := make(chan int)
 	go consume(consumer)
 	// fan-in function
-	fanOut(producer1, producer2, consumer)
+	fanIn(producer1, producer2, consumer)
 }
 
 func delay() {
@@ -39,7 +39,7 @@ func consume(ch <-chan int) {
 	}
 }
 
-func fanOut(producer1, producer2 <-chan int, consumer chan<- int) {
+func fanIn(producer1, producer2 <-chan int, consumer chan<- int) {
 	for {
 		select {
 		case receiver := <-producer1:
