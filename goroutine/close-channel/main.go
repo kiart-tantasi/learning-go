@@ -6,25 +6,11 @@ import "fmt"
 // in short: range over terminates only when channel is closed
 
 func main() {
-	noDeadlock1()
-	noDeadlock2()
-
+	// noDeadlock()
 	// hasDeadlock()
 }
 
-func noDeadlock1() {
-	ch := make(chan int)
-	go func() {
-		ch <- 1
-		// close channel to prevent deadlock
-		close(ch)
-	}()
-	for val := range ch {
-		fmt.Println(val)
-	}
-}
-
-func noDeadlock2() {
+func noDeadlock() {
 	ch := make(chan int)
 	go func() {
 		ch <- 1
@@ -38,6 +24,7 @@ func noDeadlock2() {
 func hasDeadlock() {
 	ch := make(chan int)
 	go func() {
+		// defer close(ch) // <-- one of the ways to fix this issue
 		ch <- 1
 	}()
 	for val := range ch {
