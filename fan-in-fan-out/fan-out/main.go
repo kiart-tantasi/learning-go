@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// summary: single producer with multiple consumers
+
 func main() {
 	// produce 1
 	producer := make(chan int)
@@ -15,6 +17,8 @@ func main() {
 	switcher := false
 	ch1 := make(chan int)
 	ch2 := make(chan int)
+
+	// use for-loop to distribute values from a single channel to multiple goroutines
 	for val := range producer {
 		if switcher {
 			// consumer 1

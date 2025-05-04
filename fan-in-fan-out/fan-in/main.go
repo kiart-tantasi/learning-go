@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+// summary: multiple producers with single consumers
+
 func main() {
 	ch1 := make(chan int)
 	ch2 := make(chan int)
