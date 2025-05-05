@@ -32,10 +32,11 @@ func main() {
 			if isConsumer1(val) {
 				// consumer 1
 				go func() {
+					fmt.Println("consumer 1, before reserving semaphore for value:", val)
+
 					// reserve semaphore
 					consumer1Semaphore <- 1
 
-					// log before starting
 					fmt.Println("consumer 1, started, value:", val)
 
 					// pretend this consumer takes long tasks
@@ -47,6 +48,8 @@ func main() {
 			} else {
 				// consumer 2
 				go func() {
+					fmt.Println("consumer 2, before reserving semaphore for value:", val)
+
 					// reserve semaphore
 					consumer2Semaphore <- 1
 
@@ -54,7 +57,7 @@ func main() {
 					fmt.Println("consumer 2, started, value:", val)
 
 					// pretend this consumer takes short tasks
-					time.Sleep(1 * time.Second)
+					time.Sleep(2 * time.Second)
 
 					// release semaphore
 					<-consumer2Semaphore
