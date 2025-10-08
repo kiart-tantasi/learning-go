@@ -11,15 +11,15 @@ func (p Person) PrintName() {
 	fmt.Println("Hello ! my name is", p.firstName, p.lastName)
 }
 
-type SomeFields struct {
+type SomeStruct struct {
 	a, b string
 	c    int
 }
 
-func (s SomeFields) UpdateBWithoutPointer(newB string) {
+func (s SomeStruct) UpdateBWithoutPointer(newB string) {
 	s.b = newB
 }
-func (s *SomeFields) UpdateB(newB string) {
+func (s *SomeStruct) UpdateB(newB string) {
 	s.b = newB
 }
 
@@ -38,7 +38,7 @@ func main() {
 	fmt.Println("")
 
 	// struct does not require values for all fields
-	someFields := SomeFields{
+	someFields := SomeStruct{
 		a: "a field",
 	}
 	fmt.Println("field that has value:", someFields.a)
