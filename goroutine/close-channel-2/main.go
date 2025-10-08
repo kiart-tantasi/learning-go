@@ -26,6 +26,14 @@ func getValueFromClosedChannel() {
 		// get a value
 		case val := <-ch:
 			fmt.Println("val:", val)
+		// // alternatively you can check channel before geting a value
+		// case val, ok := <-ch:
+		// 	if ok {
+		// 		fmt.Println("val:", val)
+		// 	} else {
+		// 		fmt.Println("CHANNEL IS CLOSED !")
+		// 		time.Sleep(1 * time.Second)
+		// 	}
 		// no value to get
 		default:
 			fmt.Println("sleeping...")
