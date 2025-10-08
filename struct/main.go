@@ -11,16 +11,21 @@ func (p Person) PrintName() {
 	fmt.Println("Hello ! my name is", p.firstName, p.lastName)
 }
 
+type NestedStruct struct {
+	value *string
+}
 type SomeStruct struct {
-	a, b string
-	c    int
+	a, b         string
+	c            int
+	d            *string
+	nestedStruct NestedStruct
 }
 
-func (s SomeStruct) UpdateBWithoutPointer(newB string) {
-	s.b = newB
+func (s SomeStruct) UpdateBWithoutPointer(value string) {
+	s.b = value
 }
-func (s *SomeStruct) UpdateB(newB string) {
-	s.b = newB
+func (s *SomeStruct) UpdateB(value string) {
+	s.b = value
 }
 
 func main() {
@@ -33,29 +38,99 @@ func main() {
 	fmt.Println(person.lastName)
 	fmt.Println("")
 
+	fmt.Println("==============================================")
+
 	// use struct's method
 	person.PrintName()
 	fmt.Println("")
 
+	fmt.Println("==============================================")
+
 	// struct does not require values for all fields
-	someFields := SomeStruct{
-		a: "a field",
+	nestedStructValue := "OLD VALUE"
+	nestedStruct := NestedStruct{value: &nestedStructValue}
+	foo := SomeStruct{
+		a:            "a field",
+		nestedStruct: nestedStruct,
 	}
-	fmt.Println("field that has value:", someFields.a)
-	fmt.Println("field that does not have value(string):", someFields.b)
-	fmt.Println("field that does not have value(int):", someFields.c)
-	fmt.Println("")
+	fmt.Println("field that has value:", foo.a)
+	fmt.Println("field that does not have value(string):", foo.b)
+	fmt.Println("field that does not have value(int):", foo.c)
+
+	fmt.Println("==============================================")
 
 	// pointer
 	personPointer := &person
 	fmt.Println("from pointer")
 	fmt.Println(personPointer.firstName)
-	fmt.Println("")
 
-	// update same value without / with pointer
+	// failed
 	// person.UpdateFirstNameButFail("new name!")
-	someFields.UpdateBWithoutPointer("new value !")
-	fmt.Println("update without pointer:", someFields.b)
-	someFields.UpdateB("new value !")
-	fmt.Println("update with pointer:", someFields.b)
+
+	fmt.Println("==============================================")
+
+	// update same value without pointer
+	foo.UpdateBWithoutPointer("new value ! (without pointer)")
+	fmt.Println(foo.b)
+
+	// update same value with pointer
+	foo.UpdateB("new value ! (with pointer)")
+	fmt.Println(foo.b)
+
+	fmt.Println("==============================================")
+
+	// use external function to modify a struct directly
+	updateStruct(foo, "new value ! (struct)")
+	pointer := foo.d
+	if pointer != nil {
+		fmt.Println(*pointer)
+	} else {
+		fmt.Println("nil (struct)")
+	}
+
+	// modify a struct pointer
+	updateStructPointer(&foo, "new value ! (struct pointer)")
+	pointer = foo.d
+	if pointer != nil {
+		fmt.Println(*pointer)
+	} else {
+		fmt.Println("nil (struct pointer)")
+	}
+
+	// modify nested struct
+	// NOTE: This is exceptional case where you can modify a nested struct inside struct without passing struct as pointer to the function
+	updateNestedStruct(foo, "new value ! (nested struct)")
+	pointer = foo.nestedStruct.value
+	if pointer != nil {
+		fmt.Println(*pointer)
+	} else {
+		fmt.Println("nil (nested struct)")
+	}
+
+	fmt.Println("==============================================")
+}
+
+func updateStruct(s SomeStruct, value string) {
+	if s.d != nil {
+		*s.d = value
+	}
+	newPointer := &value
+	s.d = newPointer
+}
+
+func updateStructPointer(s *SomeStruct, value string) {
+	if s.d != nil {
+		*s.d = value
+	}
+	newPointer := &value
+	s.d = newPointer
+}
+
+func updateNestedStruct(s SomeStruct, value string) {
+	if s.nestedStruct.value == nil {
+		fmt.Println("...I did try to modify nested sturct but it does not work...")
+		s.nestedStruct.value = &value
+		return
+	}
+	*s.nestedStruct.value = value
 }
